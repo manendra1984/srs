@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>srs</title>
+
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+
+</head>
+
+<body ng-app="srsApp">
+    <!--[if IE]>
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div class="container" ng-controller="mainController">
+        <div class="header">
+
+            <p>srs</p>
+        </div>
+
+
+        <div class="alert alert-warning alert-dismissible" ng-show="ui.alert" role="alert">
+            <strong>Hey {{username}} !!</strong> You can select only {{noOfSeats}} seat ,or uncheck one for selecting other.
+            <button type="button" ng-click="ui.alert = false" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form class="form-horizontal" name="myFrm">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="email">Name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" name="username" ng-model="username" user-name/>
+                            <span ng-show="myFrm.username.$invalid && !myFrm.username.$pristine" class="help-block">Invalid User Name.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4" for="noOfSeat">Number of Seats:</label>
+                        <div class="col-sm-8">
+                            <input type="number" ng-model="noOfSeats" class="form-control" name="noOfSeat" id="noOfSeat" required ng-max="10">
+                            <span ng-show="myFrm.noOfSeat.$invalid && !myFrm.noOfSeat.$pristine" class="help-block">Num. of Seat must be less then 10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group text-center">
+                <button type="submit" ng-disabled="myFrm.$invalid " ng-click="inputSubmit()" class="btn btn-default">Start Selecting</button>
+            </div>
+        </form>
+        <div class="seat-layout-container text-center" ng-show="seatlayout">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="screen">SCREEN</div>
+                </div>
+            </div>
+            <table class="table no-border">
+
+                <tbody>
+                    <tr>
+                        <td>
+                            <table class="table no-border tbl-left">
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="r in rows ">
+                                        <td>
+                                            <label>{{r}}</label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </td>
+                        <td>
+                            <table class="table">
+                                <tbody>
+                                    <thead>
+                                        <tr>
+                                            <th ng-repeat="num in columns">{{num}}</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tr ng-repeat="x in seats track by $index">
+                                        <td ng-repeat="y in x track by $index"><input seat-status class="filled-in" type="checkbox" ng-disabled="y.disable" ng-model="y.checked" id="{{y.id}}" ng-change="chooseSeat(y.id,$parent.$index,$index)" />
+                                            <label for="{{y.id}}"></label></td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <button type="submit" ng-show="bookedBtn" ng-click="bookTickets()" class="btn btn-default">Confirm Selection</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <table class="table seat-detail">
+                        <thead>
+                            <th>Name</th>
+                            <th>Number of Seats</th>
+                            <th>Seats</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="user in bookedSeat track by $index">
+                                <td>{{user.username}}</td>
+                                <td>{{user.noOfSeats}}</td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li ng-repeat="seat in user.seats">
+                                            {{seat.no}}
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="list-unstyled legend">
+                        <li>
+                            <img src="images/seat_available.png"> Available
+                        </li>
+                        <li>
+                            <img src="images/seat_reserved.png"> Reserved
+                        </li>
+                        <li>
+                            <img src="images/seat_selected.png"> Selected
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    </div>
+
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/plugins.js -->
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tooltip.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/modal.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/transition.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/button.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/popover.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/carousel.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
+    <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>

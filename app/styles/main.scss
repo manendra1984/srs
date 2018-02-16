@@ -1,0 +1,154 @@
+$icon-font-path: '../fonts/';
+// bower:scss
+@import "bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+// endbower
+body {
+    background: #ccc;
+}
+
+.header {
+    background: #2c3e50;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    p {
+        font-size: 34px;
+        color: #fff;
+    }
+}
+
+.seat-layout-container {
+    padding: 10px;
+}
+
+.screen {
+    height: 25px;
+    width: 100%;
+    background: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #fff;
+    padding: 2px;
+}
+
+.tbl-left {
+    td {
+        padding: 10px;
+        min-height: 40px;
+    }
+    label {
+        line-height: 25px;
+        text-align: right;
+    }
+}
+
+table {
+    background: #fff;
+    text-align: center;
+    th {
+        text-align: center;
+        border-top: none !important;
+    }
+    td {
+        text-align: center;
+        border-top: none !important;
+        min-height: 40px;
+    }
+}
+
+.seat-detail {
+    td {
+        border-top: 1px solid #ccc !important;
+    }
+}
+
+.legend {
+    li {
+        text-align: left;
+        padding: 5px 2px;
+    }
+}
+
+input[type="text"],
+input[type="number"] {
+    display: block;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+    height: 42px;
+    padding: 8px;
+    border: none;
+    border-bottom: 1px solid #AAA;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    transition: 0.2s ease;
+    box-shadow: none;
+    border-radius: 0;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    border-bottom: 2px solid #16a085;
+    color: #16a085;
+    transition: 0.2s ease;
+}
+
+button[type="submit"] {
+    margin-bottom: 10px;
+    margin-bottom: 10px;
+    height: 42px;
+    background: #16a085;
+    border: none;
+    border-radius: 2px;
+    color: #FFF;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: 0.1s ease;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="submit"]:focus {
+    opacity: 0.8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+}
+
+button[type="submit"]:active {
+    opacity: 1;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    transition: 0.1s ease;
+}
+
+input[type=checkbox]+label {
+    display: inline-block;
+    padding: 0 0 0 0px;
+    background: url("../images/seat_available.png") no-repeat;
+    height: 20px;
+    width: 20px;
+    ;
+}
+
+input[type=checkbox]:checked+label {
+    background: url("../images/seat_selected.png") no-repeat;
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+}
+
+input[type=checkbox]:disabled+label {
+    background: url("../images/seat_reserved.png") no-repeat;
+    height: 20px;
+    width: 20px;
+}
+
+input[type=checkbox][disabled] {
+    background: url("../images/seat_reserved.png") no-repeat;
+    height: 20px;
+    width: 20px;
+}
+
+input[type=checkbox] {
+    display: none;
+}
